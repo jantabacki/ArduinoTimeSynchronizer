@@ -1,0 +1,6 @@
+TimeSynchronizer	KEYWORD1
+ExternalSynchronization	KEYWORD2
+TimeToString	KEYWORD2
+GetHour	KEYWORD2
+GetMinute	KEYWORD2
+GetSecond	KEYWORD2

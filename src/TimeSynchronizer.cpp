@@ -2,27 +2,31 @@
 
 void TimeSynchronizer::internalSynchronization() {
   currentMillis = millis();
-  long timeSpan = currentMillis - previousMillis;
+  unsigned long timeSpan = currentMillis - previousMillis;
   previousMillis = currentMillis;
-  long secondToAdd = timeSpan / 1000;
-  long millisToSubstract = timeSpan % 1000;
+  unsigned long secondToAdd = timeSpan / 1000;
+  unsigned long millisToSubstract = timeSpan % 1000;
   previousMillis -= millisToSubstract;
   totalSeconds += secondToAdd;
-  totalSeconds %= 86400;
   updateTimeVariables();
 }
 
 void TimeSynchronizer::updateTimeVariables(){
-  long restOfSeconds = totalSeconds % 3600;
-  long fullHoursInSeconds = totalSeconds - restOfSeconds;
-  hour = fullHoursInSeconds / 3600;
-  long restOfSecondsToDisplay = restOfSeconds % 60;
-  long fullMinutesInSeconds = restOfSeconds - restOfSecondsToDisplay;
+  unsigned long restOfSeconds = totalSeconds % 3600;
+  unsigned long fullHoursInSeconds = totalSeconds - restOfSeconds;
+  hour = (fullHoursInSeconds % 86400) / 3600;
+  unsigned long restOfSecondsToDisplay = restOfSeconds % 60;
+  unsigned long fullMinutesInSeconds = restOfSeconds - restOfSecondsToDisplay;
   minute = fullMinutesInSeconds / 60;
-  second = restOfSecondsToDisplay;
+  second = restOfSecondsToDisplay % 60;
 }
 
-void TimeSynchronizer::ExternalSynchronization(long externalHour, long externalMinute, long externalSecond) {
+unsigned long TimeSynchronizer::GetTotalSeconds(){
+	internalSynchronization();
+	return totalSeconds;	
+}
+
+void TimeSynchronizer::ExternalSynchronization(unsigned long externalHour, unsigned long externalMinute, unsigned long externalSecond) {
   totalSeconds = externalSecond + externalMinute * 60 + externalHour * 60 * 60;
   previousMillis = millis();
 }

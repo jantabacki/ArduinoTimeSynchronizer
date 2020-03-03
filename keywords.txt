@@ -4,3 +4,4 @@ TimeToString	KEYWORD2
 GetHour	KEYWORD2
 GetMinute	KEYWORD2
 GetSecond	KEYWORD2
+GetTotalSeconds	KEYWORD2
